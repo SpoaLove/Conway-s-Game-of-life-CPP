@@ -14,14 +14,18 @@ int generation = 0;
 
 void printGame() {
     system("clear");
+    cout << "Current generation: " << generation << endl << "+";
+    for (int i = 0; i < col; ++i) cout << "-";
+    cout << "+" << endl;
     for (int i = 0; i < row; ++i) {
-        for (int j = 0; j < col; ++j) {
+        cout << "|";
+        for (int j = 0; j < col; ++j)
             cout << ((game[i][j] == LIFE) ? LIFE : ' ');
-        }
-        cout << endl;
+        cout << "|" << endl;
     }
-    cout << "Current generation: " << generation << endl;
-    cout << "Press Enter to Continue... (or any other key + enter to exit)" << endl;
+    cout << "+";
+    for (int i = 0; i < col; ++i) cout << "-";
+    cout << "+" << endl << "Press Enter to Continue... (or any other key + enter to exit)" << endl;
 }
 
 // counts the amount of living neighbours around position (x,y)
@@ -29,8 +33,8 @@ int countNeighbors(int x, int y) {
     int count = 0;
     for (int nx = x - 1; nx <= x + 1; ++nx)
         for (int ny = y - 1; ny <= y + 1; ++ny)
-            if (0 <= nx && nx < row && 0 <= ny && ny < col)
-                if (game[nx][ny] == LIFE && !(nx == x && ny == y)) count++;
+            if (0 <= nx && nx < row && 0 <= ny && ny < col
+                && game[nx][ny] == LIFE && !(nx == x && ny == y)) ++count;
     return count;
 }
 
@@ -43,7 +47,7 @@ int countNeighbors(int x, int y) {
  */
 void nextGeneration() {
     char next[row][col];
-    for (int i = 0; i < row; ++i) {
+    for (int i = 0; i < row; ++i)
         for (int j = 0; j < col; ++j) {
             int liveCount = countNeighbors(i,j);
             if ((game[i][j] == LIFE && (liveCount == 2 || liveCount == 3))
@@ -51,13 +55,11 @@ void nextGeneration() {
                  next[i][j] = LIFE;
             else next[i][j] = DEAD;
         }
-    }
 
-    for (int i = 0; i < row; ++i) {
-        for (int j = 0; j < col; ++j) {
+    for (int i = 0; i < row; ++i)
+        for (int j = 0; j < col; ++j)
             game[i][j] = next[i][j];
-        }
-    }
+
     generation++;
     printGame();
 }
@@ -67,11 +69,10 @@ int main() {
     // read initial row and column size
     cin >> row >> col;
 
-    for (int i = 0; i < row; ++i) {
-        for (int j = 0; j < col; ++j) {
+    for (int i = 0; i < row; ++i)
+        for (int j = 0; j < col; ++j)
             cin >> game[i][j];
-        }
-    }
+
     printGame();
     char end;
     cin.get(end);
