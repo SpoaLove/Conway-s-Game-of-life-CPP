@@ -16,7 +16,7 @@ void printGame() {
     system("clear");
     for (int i = 0; i < row; ++i) {
         for (int j = 0; j < col; ++j) {
-            cout << game[i][j];
+            cout << ((game[i][j] == LIFE) ? LIFE : ' ');
         }
         cout << endl;
     }
